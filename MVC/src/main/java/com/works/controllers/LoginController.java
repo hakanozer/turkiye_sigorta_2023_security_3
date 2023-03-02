@@ -1,6 +1,8 @@
 package com.works.controllers;
 
 import com.works.entities.Admin;
+import com.works.services.LoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +14,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
+
+    final LoginService loginService;
 
     @GetMapping("/")
     public String login() {
@@ -26,7 +31,9 @@ public class LoginController {
             model.addAttribute("errors", errors);
             return "login";
         }else {
-            System.out.println( admin );
+            model.addAttribute("password", admin.getPassword());
+            boolean status = loginService.login(admin);
+            System.out.println("Login status : " + status);
         }
         return "login";
     }
