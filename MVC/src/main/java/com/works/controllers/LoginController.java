@@ -31,9 +31,11 @@ public class LoginController {
             model.addAttribute("errors", errors);
             return "login";
         }else {
-            model.addAttribute("password", admin.getPassword());
-            boolean status = loginService.login(admin);
-            System.out.println("Login status : " + status);
+            //model.addAttribute("password", admin.getPassword());
+            boolean status = loginService.jpaLogin(admin);
+            if ( status ) {
+                return "redirect:/dashboard";
+            }
         }
         return "login";
     }

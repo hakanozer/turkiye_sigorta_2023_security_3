@@ -44,8 +44,6 @@ public class FilterConfig implements Filter {
         response.setCharacterEncoding("UTF8");
 
         String url = request.getRequestURI();
-
-
         // xss control
         if ( !url.equals("/htmlSave") ) {
             long start = System.currentTimeMillis();
@@ -102,7 +100,27 @@ public class FilterConfig implements Filter {
         }
 
 
-        chain.doFilter(request, response);
+        String[] urls = {"/", "/adminLogin", "/xssError"};
+        boolean sessionStatus = true;
+        for ( String item : urls ) {
+            if (item.equals(url)) {
+                sessionStatus = false;
+                break;
+            }
+        }
+
+        if (sessionStatus) {
+            boolean status = request.getSession().getAttribute("admin") == null;
+            if (status) {
+                response.sendRedirect("/");
+            }else {
+                chain.doFilter(request, response);
+            }
+        }else {
+            chain.doFilter(request, response);
+        }
+
+
     }
 
 

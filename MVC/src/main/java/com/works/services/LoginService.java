@@ -1,12 +1,15 @@
 package com.works.services;
 
 import com.works.entities.Admin;
+import com.works.repositories.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +17,8 @@ public class LoginService {
 
     final DB db;
     final TinkEncDec tinkEncDec;
+    final AdminRepository adminRepository;
+    final HttpServletRequest request;
 
     public boolean login( Admin admin ) {
         try {
@@ -36,5 +41,20 @@ public class LoginService {
         }
         return false;
     }
+
+
+    public boolean jpaLogin( Admin admin ) {
+        Optional<Admin> optionalAdmin = adminRepository.findByEmailEqualsIgnoreCase(admin.getEmail());
+        if(optionalAdmin.isPresent() ) {
+            Admin adm = optionalAdmin.get();
+            String dbPass = tinkEncDec.decrypt(adm.getPassword());
+            if (dbPass.equals(admin.getPassword())) {
+                request.getSession().setAttribute("admin", adm);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
