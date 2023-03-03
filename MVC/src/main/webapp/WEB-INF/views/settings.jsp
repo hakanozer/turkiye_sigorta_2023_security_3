@@ -12,6 +12,7 @@
 </head>
 <body>
 <div class="container">
+    <jsp:include page="inc/navbar.jsp"></jsp:include>
     <h1>Welcome Settings</h1>
 </div>
 </body>

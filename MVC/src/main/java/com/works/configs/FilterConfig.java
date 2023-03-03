@@ -114,6 +114,8 @@ public class FilterConfig implements Filter {
             if (status) {
                 response.sendRedirect("/");
             }else {
+                Admin admin = (Admin) request.getSession().getAttribute("admin");
+                request.setAttribute("admin", admin);
                 chain.doFilter(request, response);
             }
         }else {
