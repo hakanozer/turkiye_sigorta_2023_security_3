@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class Note {
+public class Note extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
