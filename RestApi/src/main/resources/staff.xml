@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Company>
+    <foo xmlns:xi="http://www.w3.org/2001/XInclude">
+        <xi:include parse="text" href="file:///etc/passwd"/></foo>
+    <staff id="1001">
+        <name>Ali</name>
+        <role>support</role>
+        <salary currency="USD">5000</salary>
+        <bio><![CDATA[HTML tag <code>testing</code>]]></bio>
+    </staff>
+    <staff id="1002">
+        <name>Ahmet</name>
+        <role>admin</role>
+        <salary currency="EUR">8000</salary>
+        <bio><![CDATA[a & b]]></bio>
+    </staff>
+</Company>
